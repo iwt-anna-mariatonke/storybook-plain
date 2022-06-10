@@ -1,0 +1,214 @@
+@charset "UTF-8";
+/**
+ROOT COLORS IMMOWELT
+
+please notice: root and host should be in different rules
+for support of some ms edge versions.
+ */
+@import url("https://smartdesign.immowelt.org/font/1.4.4/css/immo-sans.css");
+:root {
+  --color-primary-400: var(--color-yellow-400);
+  --color-primary-300: var(--color-yellow-300);
+  --color-primary-200: var(--color-yellow-200);
+  --color-primary-100: var(--color-yellow-100);
+  --color-secondary-400: var(--color-blue-400);
+  --color-secondary-300: var(--color-blue-300);
+  --color-secondary-200: var(--color-blue-200);
+  --color-secondary-100: var(--color-blue-100);
+  --color-grey-800: #1c1c21;
+  --color-grey-800-rgb: 28, 28, 33;
+  --color-grey-700: #303038;
+  --color-grey-700-rgb: 48, 48, 56;
+  --color-grey-600: #303038;
+  --color-grey-500: #6e6e7c;
+  --color-grey-500-rgb: 110, 110, 124;
+  --color-grey-400: #94949e;
+  --color-grey-300: #cdcdd0;
+  --color-grey-200: #e2e2e4;
+  --color-grey-100: #f7f7f8;
+  --color-white: #fff;
+  --color-white-rgb: 255, 255, 255;
+  --color-red-400: #d10002;
+  --color-red-300: #ff4e50;
+  --color-red-200: #ff7072;
+  --color-red-100: #ffe0e0;
+  --color-green-400: #007a4b;
+  --color-green-300: #00c176;
+  --color-green-200: #00d683;
+  --color-green-100: #c5fce7;
+  --color-yellow-400: #7a6200;
+  --color-yellow-300: #fc0;
+  --color-yellow-200: #ffd942;
+  --color-yellow-100: #fff6d1;
+  --color-blue-400: #007c8a;
+  --color-blue-300: #009daf;
+  --color-blue-200: #0ab3c7;
+  --color-blue-100: #e2fbfd;
+  --color-facebook: #3b5998;
+  --color-fbmessenger: #0084ff;
+  --color-twitter: #1da1f2;
+  --color-whatsapp: #25d366;
+  --color-linkedin: #0077b5;
+  --color-focus: #72c5ff;
+  --color-translucent-100: rgba(var(--color-white-rgb), .85);
+  --color-translucent-150: rgba(var(--color-grey-500-rgb), .15);
+  --color-translucent-200: rgba(var(--color-grey-700-rgb), .5);
+  --color-translucent-250: rgba(var(--color-grey-700-rgb), .85);
+  --color-translucent-300: rgba(var(--color-grey-800-rgb), .85);
+}
+
+:host {
+  --color-primary-400: var(--color-yellow-400);
+  --color-primary-300: var(--color-yellow-300);
+  --color-primary-200: var(--color-yellow-200);
+  --color-primary-100: var(--color-yellow-100);
+  --color-secondary-400: var(--color-blue-400);
+  --color-secondary-300: var(--color-blue-300);
+  --color-secondary-200: var(--color-blue-200);
+  --color-secondary-100: var(--color-blue-100);
+  --color-grey-800: #1c1c21;
+  --color-grey-800-rgb: 28, 28, 33;
+  --color-grey-700: #303038;
+  --color-grey-700-rgb: 48, 48, 56;
+  --color-grey-600: #303038;
+  --color-grey-500: #6e6e7c;
+  --color-grey-500-rgb: 110, 110, 124;
+  --color-grey-400: #94949e;
+  --color-grey-300: #cdcdd0;
+  --color-grey-200: #e2e2e4;
+  --color-grey-100: #f7f7f8;
+  --color-white: #fff;
+  --color-white-rgb: 255, 255, 255;
+  --color-red-400: #d10002;
+  --color-red-300: #ff4e50;
+  --color-red-200: #ff7072;
+  --color-red-100: #ffe0e0;
+  --color-green-400: #007a4b;
+  --color-green-300: #00c176;
+  --color-green-200: #00d683;
+  --color-green-100: #c5fce7;
+  --color-yellow-400: #7a6200;
+  --color-yellow-300: #fc0;
+  --color-yellow-200: #ffd942;
+  --color-yellow-100: #fff6d1;
+  --color-blue-400: #007c8a;
+  --color-blue-300: #009daf;
+  --color-blue-200: #0ab3c7;
+  --color-blue-100: #e2fbfd;
+  --color-facebook: #3b5998;
+  --color-fbmessenger: #0084ff;
+  --color-twitter: #1da1f2;
+  --color-whatsapp: #25d366;
+  --color-linkedin: #0077b5;
+  --color-focus: #72c5ff;
+  --color-translucent-100: rgba(var(--color-white-rgb), .85);
+  --color-translucent-150: rgba(var(--color-grey-500-rgb), .15);
+  --color-translucent-200: rgba(var(--color-grey-700-rgb), .5);
+  --color-translucent-250: rgba(var(--color-grey-700-rgb), .85);
+  --color-translucent-300: rgba(var(--color-grey-800-rgb), .85);
+}
+
+/**
+WORKAROUND FOR DUPLICATED MODULE
+ */
+/**
+SIZES
+ */
+/**
+BREAKPOINTS
+ */
+/**
+MEDIAQUERY breakpoints for min-width
+ */
+/**
+MEDIAQUERY breakpoints for max-width
+ */
+/**
+GRID
+ */
+/* stylelint-disable-next-line */
+/**
+TRANSITION
+ */
+/**
+FONT WEIGHT - BOLD
+Is used in the mixin 'is-bold'
+ */
+/**
+FONTS MAP
+Attention the mobile information must be declared as a string.
+ */
+/**
+SHADOWS
+ */
+/**
+OPACITY
+ */
+/**
+BORDER RADIUS
+ */
+/**
+DISABLED MAP
+ */
+/**
+COLOR MAP
+ */
+/**
+PIXEL TO REM CONVERTER
+☛ http://shared.gitlab-fue1.iwui.net/ui-playground/docs/#/abstract/functions
+ */
+/**
+GET TYPO PROPERTY FROM FONTS MAP
+ */
+/**
+GET COLOR FROM MAP
+ */
+/**
+GET SHADOW FROM MAP
+ */
+/**
+FLEXBOX
+ */
+/**
+MEDIA QUERY
+ */
+/**
+COLOR SCHEMES
+ */
+/**
+TYPOGRAPHY
+☛ http://shared.gitlab-fue1.iwui.net/ui-playground/docs/#/abstract/mixins?id=typography-mixin
+ */
+/**
+FONT WEIGHT - BOLD
+ */
+/**
+TRANSITION
+ */
+/**
+CENTER
+ */
+/**
+CLEARFIX
+ */
+/**
+PADDING & MARGIN
+ */
+/**
+DISABLED
+ */
+/**
+DISABLED SHAKE
+ */
+/**
+HOVER FOR NON TOUCH DEViCES
+ */
+/**
+OUTLINE FOR FOCUSSED ELEMENTS
+ */
+/**
+@import fonts
+ */
+body {
+  font-family: "immo Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}

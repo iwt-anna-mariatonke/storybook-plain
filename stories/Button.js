@@ -1,9 +1,10 @@
 import './button.css';
+import './colors.css';
 
 export const createButton = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
+  mode = 'primary',
+  size = '100',
+  danger = false,
   label,
   onClick,
 }) => {
@@ -11,11 +12,11 @@ export const createButton = ({
   btn.type = 'button';
   btn.innerText = label;
   btn.addEventListener('click', onClick);
+  const variation = danger ? 'btn--danger' : '';
 
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
-  btn.className = ['storybook-button', `storybook-button--${size}`, mode].join(' ');
+  btn.className = ['btn', `btn--${size}`, `btn--${mode}`, variation].join(' ');
 
-  btn.style.backgroundColor = backgroundColor;
 
+  
   return btn;
 };

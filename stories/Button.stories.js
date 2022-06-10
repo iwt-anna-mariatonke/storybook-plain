@@ -5,14 +5,17 @@ export default {
   title: 'Example/Button',
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
   argTypes: {
-    backgroundColor: { control: 'color' },
     label: { control: 'text' },
     onClick: { action: 'onClick' },
-    primary: { control: 'boolean' },
+    mode: {       
+      control: { type: 'select' },
+      options: ['primary', 'secondary', 'tertiary'],
+    },
     size: {
       control: { type: 'select' },
-      options: ['small', 'medium', 'large'],
+      options: ['50', '100', '200'],
     },
+    danger: { control: 'boolean' },
   },
 };
 
@@ -26,23 +29,37 @@ const Template = ({ label, ...args }) => {
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/html/writing-stories/args
 Primary.args = {
-  primary: true,
+  mode: 'primary',
   label: 'Button',
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   label: 'Button',
+  mode: 'secondary',
+};
+
+export const Tertiary = Template.bind({});
+Tertiary.args = {
+  label: 'Button',
+  mode: 'tertiary',
 };
 
 export const Large = Template.bind({});
 Large.args = {
-  size: 'large',
+  size: '200',
   label: 'Button',
 };
 
 export const Small = Template.bind({});
 Small.args = {
-  size: 'small',
+  size: '50',
+  label: 'Button',
+};
+
+export const Danger = Template.bind({});
+// More on args: https://storybook.js.org/docs/html/writing-stories/args
+Danger.args = {
+  danger: true,
   label: 'Button',
 };
