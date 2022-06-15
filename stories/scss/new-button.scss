@@ -1,0 +1,660 @@
+@use "abstracts/variables" as var;
+@use "abstracts/mixins" as *;
+@use "abstracts/functions" as func;
+
+/************* BUTTONS ************/
+//reset
+button {
+    padding: 0;
+    color: inherit;
+    cursor: pointer;
+    background-color: transparent;
+    border-width: 0;
+}
+
+// VARIABLES
+// - - general
+$standard_border: 1px solid;
+$opacity_02: .2;
+$opacity_1: 1;
+$rgba_color_dark: rgba(0, 0, 0, .1);
+$rgba_color_light: rgba(255, 255, 255, .1);
+$align_middle: middle;
+$align_top: top;
+
+// - - sizes
+
+/*
+  [ nth1 = $btn-height  = height ]
+  [ nth2 = $btn-padding-tb = padding top & bottom ]
+  [ nth3 = $btn-padding-lr = padding left & right ]
+  [ nth4 = font variable ]
+*/
+
+// - - - standard button sizes
+$btn-size-50: (
+    40px,
+    8px,
+    16px,
+);
+$btn-size-100: (
+    56px,
+    16px,
+    24px,
+);
+$btn-size-200: (
+    72px,
+    24px,
+    24px,
+);
+
+// - - - button sizes config with variables from above
+$btnSizes: (
+    "50": ($btn-size-50),
+    "100": ($btn-size-100),
+    "200": ($btn-size-200),
+);
+
+/*
+  [ nth1 = height & width ]
+  [ nth2 = padding ]
+  [ nth3 = border-radius ]
+  [ nth4 = icon font-size ]
+*/
+
+// - - - icon only button size variables
+$icon-btn-size-50: (
+    40px,
+    8px,
+    32px,
+    24px,
+);
+$icon-btn-size-100: (
+    56px,
+    16px,
+    32px,
+    24px,
+);
+$icon-btn-size-200: (
+    72px,
+    16px,
+    72px,
+    40px,
+);
+
+// - - - icon only button sizes config with variables from above
+$icon-btnSizes: (
+    "50": ($icon-btn-size-50),
+    "100": ($icon-btn-size-100),
+    "200": ($icon-btn-size-200),
+);
+
+// MIXINS
+
+// - - mixin for general button attributes
+@mixin button-general {
+    position: relative;
+    overflow: hidden;
+    @include is-bold;
+    border-radius: var.$border-radius-50;
+    @include typo-has-size(100);
+}
+
+// - - mixin for  loading animation
+@mixin loading-animation {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: func.remconverter(72px);
+    height: func.remconverter(24px);
+}
+
+// - -mixin for  loading animation dots
+@mixin loading-dots {
+    width: func.remconverter(8px);
+    height: func.remconverter(8px);
+    border-radius: 100%;
+    animation-duration: .8s;
+    animation-timing-function: ease-in;
+    animation-iteration-count: infinite;
+}
+
+/* stylelint-disable-next-line */
+a.btn {
+    display: inline-flex;
+}
+
+/************ START ACTUAL BUTTON STYLES *************/
+.btn {
+    // with $this-block all other nested classes refer to main class .btn so that te result is btn--primary, btn--danger and so on
+    $this-block: &;
+    @include button-general;
+    @include transition(var.$transition-100, var.$timing-function-ease);
+    transition-property: border-color, background-color, color;
+
+    //full-width option for every viewport
+    &#{$this-block}--full-width {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+    @each $mediaquery in var.$mediaquery-breakpoints-max {
+        @media screen and (max-width: #{nth($mediaquery, 2) }) {
+            &#{$this-block}--full-width\:#{nth($mediaquery, 1)} {
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+
+
+    span {
+        color: inherit;
+    }
+
+    // generate size modifiers --50, --100 and --200
+    @each $btnSize, $value in $btnSizes {
+        &--#{nth($btnSize, 1)} {
+            max-height: func.remconverter(nth($value, 1));
+            padding: func.remconverter(nth($value, 2)) func.remconverter(nth($value, 3));
+        }
+    }
+
+    .sd-icon,
+    i {
+        width: func.remconverter(24px);
+        height: func.remconverter(24px);
+        margin-right: func.remconverter(8px);
+        font-size: func.remconverter(24px);
+        color: inherit;
+        vertical-align: top;
+    }
+
+    &#{$this-block}--icon-right {
+        .sd-icon,
+        i {
+            margin-right: 0;
+            margin-left: func.remconverter(8px);
+        }
+    }
+
+    .badge{
+        margin-left: var.$spacing-75;
+        font-weight: var.$normal;
+    }
+
+    &__animation {
+        @include loading-animation;
+
+        #{$this-block}__dot {
+            @include loading-dots;
+
+            &:not(:nth-child(3)) {
+                margin-right: func.remconverter(8px);
+            }
+
+            @for $i from 1 through 4 {
+                &:nth-child(#{$i}) {
+                    animation-name: btn-loading-animation__#{$i};
+                }
+            }
+        }
+
+        // ripple animation
+        &-ripple {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: $rgba_color_dark;
+            border-radius: 50%;
+            animation: ripple_effect_animation .3s ease-in-out;
+
+            &-light {
+                @extend .btn__animation-ripple;
+                background-color: $rgba_color_light;
+            }
+        }
+
+        @keyframes btn-loading-animation__1 {
+
+            0%,
+            70%,
+            100% {
+                opacity: $opacity_02;
+            }
+
+            30% {
+                opacity: $opacity_1;
+            }
+        }
+
+        @keyframes btn-loading-animation__2 {
+
+            0%,
+            15%,
+            85%,
+            100% {
+                opacity: $opacity_02;
+            }
+
+            45% {
+                opacity: $opacity_1;
+            }
+        }
+
+        @keyframes btn-loading-animation__3 {
+
+            0%,
+            30%,
+            100% {
+                opacity: $opacity_02;
+            }
+
+            60% {
+                opacity: $opacity_1;
+            }
+        }
+    }
+
+    /*********  PRIMARY  *********/
+
+    &--primary {
+        color: func.color(grey, 700);
+        background-color: func.color(primary, 300);
+
+        @include hover-supported() {
+            background-color: func.color(primary, 200);
+        }
+
+        &:disabled {
+            @include disabled(var.$is-disabled...);
+
+            @include hover-supported() {
+                background-color: func.color(primary, 300);
+                @include disabled-shake;
+            }
+        }
+
+        &#{$this-block}--danger {
+            color: func.color(white);
+            background-color: func.color(red, 400);
+
+            @include hover-supported() {
+                background-color: func.color(red, 300);
+            }
+
+            &:disabled {
+                @include hover-supported() {
+                    background-color: func.color(red, 400);
+                }
+            }
+
+            .sd-icon,
+            i {
+                color: func.color(white);
+            }
+
+            &#{$this-block}--loading {
+                background-color: func.color(red, 100);
+
+                #{$this-block}__animation {
+                    #{$this-block}__dot {
+                        background: func.color(red, 400);
+                    }
+                }
+            }
+        }
+
+        &#{$this-block}--loading {
+            cursor: default;
+            background-color: func.color(primary, 100);
+
+            #{$this-block}__animation {
+                #{$this-block}__dot {
+                    background: func.color(primary, 400);
+                }
+            }
+        }
+    }
+
+    /*********  SECONDARY  *********/
+
+    &--secondary {
+        color: func.color(grey, 700);
+        border: $standard_border func.color(grey, 700);
+
+        @include hover-supported() {
+            color: func.color(white);
+            background-color: func.color(grey, 700);
+
+            .sd-icon,
+            i {
+                color: func.color(white);
+            }
+        }
+
+        &:disabled {
+            @include disabled(var.$is-disabled...);
+
+            @include hover-supported() {
+                color: func.color(grey, 700);
+                background-color: transparent;
+                @include disabled-shake;
+            }
+        }
+
+        &#{$this-block}--danger {
+            color: func.color(red, 400);
+            border: $standard_border func.color(red, 400);
+
+            .sd-icon,
+            i {
+                color: func.color(red, 400);
+            }
+
+            @include hover-supported() {
+                color: func.color(white);
+                background-color: func.color(red, 400);
+                border: $standard_border func.color(red, 400);
+
+                .sd-icon,
+                i {
+                    color: func.color(white);
+                }
+            }
+
+            &:disabled {
+                @include hover-supported() {
+                    color: func.color(red, 400);
+                    background-color: transparent;
+                }
+            }
+
+            &#{$this-block}--loading {
+                border: $standard_border func.color(red, 100);
+
+                #{$this-block}__animation {
+                    #{$this-block}__dot {
+                        background: func.color(red, 400);
+                    }
+                }
+            }
+        }
+
+        &#{$this-block}--on-dark {
+            color: func.color(grey, 100);
+            border: $standard_border func.color(grey, 100);
+
+            .sd-icon,
+            i {
+                color: func.color(white);
+            }
+
+            @include hover-supported() {
+                color: func.color(grey, 700);
+                background-color: func.color(grey, 100);
+
+                .sd-icon,
+                i {
+                    color: func.color(grey, 700);
+                }
+            }
+
+            &:disabled {
+                @include hover-supported() {
+                    color: func.color(grey, 100);
+                    background-color: transparent;
+                }
+            }
+
+            &#{$this-block}--loading {
+                border: $standard_border func.color(grey, 500);
+
+                #{$this-block}__animation {
+                    #{$this-block}__dot {
+                        background: func.color(grey, 100);
+                    }
+                }
+            }
+        }
+
+        &#{$this-block}--loading {
+            cursor: default;
+            border: $standard_border func.color(grey, 300);
+
+            #{$this-block}__animation {
+                #{$this-block}__dot {
+                    background: func.color(grey, 700);
+                }
+            }
+
+            @include hover-supported() {
+                background-color: transparent;
+            }
+        }
+
+        &.has-disabled-look {
+            @include hover-supported() {
+                @include disabled-shake;
+                background-color: transparent;
+            }
+        }
+    }
+
+    /*********  TERTIARY  *********/
+
+    &--tertiary {
+        color: func.color(grey, 700);
+
+        @include hover-supported() {
+            color: func.color(grey, 500);
+        }
+
+        &:disabled {
+            @include disabled(var.$is-disabled...);
+
+            @include hover-supported() {
+                @include disabled-shake;
+                color: func.color(grey, 700);
+            }
+        }
+
+        #{$this-block}__content {
+            text-decoration: underline;
+            text-underline-offset: 1px;
+        }
+
+        &#{$this-block}--danger {
+            color: func.color(red, 400);
+
+            .sd-icon,
+            i {
+                color: func.color(red, 400);
+            }
+
+            @include hover-supported() {
+                background-color: func.color(red, 100);
+            }
+
+            &:disabled {
+                @include hover-supported() {
+                    background-color: transparent;
+                }
+            }
+
+            &#{$this-block}--loading {
+                #{$this-block}__animation {
+                    #{$this-block}__dot {
+                        background: func.color(red, 400);
+                    }
+                }
+            }
+        }
+
+        &#{$this-block}--on-dark {
+            color: func.color(white);
+
+            .sd-icon,
+            i {
+                color: func.color(white);
+            }
+
+            @include hover-supported() {
+                color: func.color(grey, 200);
+            }
+
+            &:disabled {
+                @include hover-supported() {
+                    color: func.color(white);
+                }
+            }
+
+            &#{$this-block}--loading {
+                #{$this-block}__animation {
+                    #{$this-block}__dot {
+                        background: func.color(grey, 100);
+                    }
+                }
+            }
+        }
+
+        &#{$this-block}--loading {
+            cursor: default;
+            #{$this-block}__animation {
+                #{$this-block}__dot {
+                    background: func.color(grey, 700);
+                }
+            }
+
+            @include hover-supported() {
+                background-color: transparent;
+            }
+        }
+
+        &#{$this-block}--no-padding {
+            padding: 0;
+        }
+
+    }
+
+    &.has-disabled-look {
+        @include disabled(var.$is-disabled...);
+
+        @include hover-supported() {
+            @include disabled-shake;
+            color: func.color(grey, 700);
+        }
+    }
+}
+
+
+/*********  ICON ONLY  *********/
+
+.icon-btn {
+    $this-block: &;
+    position: relative;
+    overflow: hidden;
+    border-radius: 100%;
+    @include transition(var.$transition-100, var.$timing-function-ease);
+
+    transition-property: border-color, background-color, color;
+
+    @each $icon-btnSize, $value in $icon-btnSizes {
+        &--#{nth($icon-btnSize, 1)} {
+            width: func.remconverter(nth($value, 1));
+            min-width: func.remconverter(nth($value, 1));
+            height: func.remconverter(nth($value, 1));
+            padding: func.remconverter(nth($value, 2));
+
+            @include hover-supported() {
+                border-radius: func.remconverter(nth($value, 3));
+                transform: translateZ(0); // fixes ripple issues on safari
+            }
+            .sd-icon,
+            i {
+                display: inline-block;
+                font-size: func.remconverter(nth($value, 4));
+                line-height: func.remconverter(nth($value, 4));
+            }
+        }
+    }
+
+    &__animation {
+
+        &-ripple {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            overflow: hidden;
+            background-color: $rgba_color_dark;
+            border-radius: 50%;
+            animation: ripple_effect_animation .3s ease-in-out;
+
+            &-light {
+                @extend .btn__animation-ripple;
+                background-color: $rgba_color_light;
+            }
+        }
+    }
+
+    @include hover-supported() {
+        background-color: func.color(translucent, 150);
+    }
+
+    &:disabled {
+        @include disabled(var.$is-disabled...);
+
+        @include hover-supported() {
+            background-color: transparent;
+            @include disabled-shake;
+            .icon-btn {
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    &--on-dark {
+        .sd-icon,
+        i {
+            color: func.color(white);
+        }
+
+        &:hover {
+            background-color: func.color(translucent, 250);
+        }
+    }
+
+    &--blurry {
+        /* slightly transparent fallback */
+        background-color: var(--color-translucent-250);
+
+        /* if backdrop support: very transparent and blurred */
+        /* stylelint-disable-next-line */
+        @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+            background-color: var(--color-translucent-200);
+
+            /* stylelint-disable-next-line */
+            backdrop-filter: blur(20px);
+        }
+
+        .sd-icon,
+        i {
+            color: func.color(white);
+        }
+
+        &:hover {
+            background-color: func.color(grey, 500);
+        }
+    }
+
+    &.has-disabled-look {
+        @include disabled(var.$is-disabled...);
+
+        @include hover-supported() {
+            @include disabled-shake;
+            color: func.color(grey, 700);
+        }
+    }
+
+}

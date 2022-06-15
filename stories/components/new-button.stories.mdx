@@ -1,0 +1,65 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import '../scss/new-button.scss';
+
+export const createButton = ({
+  mode = 'primary',
+  size = '100',
+  danger = false,
+  label,
+  onClick,
+}) => {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.innerText = label;
+  btn.addEventListener('click', onClick);
+  const variation = danger ? 'btn--danger' : '';
+  btn.className = ['btn', `btn--${size}`, `btn--${mode}`, variation].join(' ');
+  return btn;
+};
+
+export const Template = ({ label, ...args }) => {
+  // You can either use a function to create DOM elements or use a plain html string!
+   //return `<div>${label}</div>`;
+  return createButton({ label, ...args });
+};
+
+<Meta title="Example/NEW_Button" component={createButton} 
+argTypes={{
+      label: { control: 'text' },
+      onClick: { action: 'onClick' },
+      mode: {       
+        control: { type: 'select' },
+        options: ['primary', 'secondary', 'tertiary'],
+      },
+      size: {
+        control: { type: 'select' },
+        options: ['50', '100', '200'],
+      },
+      danger: { control: 'boolean' },
+    }}
+    />
+
+## hallo button
+
+Das ist die Doku zum primary Button. 
+Es gibt alle Buttons in drei Größen.
+
+<Canvas>
+  <Story 
+    name="primary"
+     args={{ 
+        mode: 'primary',
+        label: 'Button',
+      }}>
+    {Template.bind({})}
+  </Story>
+    <Story 
+    name="secondary"
+     args={{ 
+        mode: 'secondary',
+        label: 'Button',
+      }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+

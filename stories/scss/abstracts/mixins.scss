@@ -1,0 +1,294 @@
+@use "variables" as var;
+@use "functions" as func;
+
+/**
+FLEXBOX
+ */
+@mixin flexbox {
+    display: flex;
+}
+
+@mixin flex-wrap($value: nowrap) {
+    flex-wrap: $value;
+
+    @if $value==nowrap {
+        flex-wrap: none;
+    }
+}
+
+@mixin flex-shrink($int: 1) {
+    flex-shrink: $int;
+}
+
+@mixin flex-basis($value: auto) {
+    flex-basis: $value;
+}
+
+/**
+MEDIA QUERY
+ */
+@mixin has-max-width($size) {
+    @each $mediaquery in var.$mediaquery-breakpoints-max {
+        @if $size==nth($mediaquery, 1) {
+            @media screen and (max-width: #{nth($mediaquery, 2) }) {
+                @content;
+            }
+        }
+    }
+}
+
+@mixin has-min-width($size) {
+    @each $mediaquery in var.$mediaquery-breakpoints-min {
+        @if $size==nth($mediaquery, 1) {
+            @media screen and (min-width: #{nth($mediaquery, 2) }) {
+                @content;
+            }
+        }
+    }
+}
+
+/**
+COLOR SCHEMES
+ */
+@mixin is-dark-mode() {
+    @media (prefers-color-scheme: dark) {
+        @content;
+    }
+}
+
+@mixin is-light-mode() {
+    @media (prefers-color-scheme: light) {
+        @content;
+    }
+}
+
+/**
+TYPOGRAPHY
+☛ http://shared.gitlab-fue1.iwui.net/ui-playground/docs/#/abstract/mixins?id=typography-mixin
+ */
+@mixin typo-has-size($size, $tag-or-class...) {
+
+    @if map-has-key(var.$font-size-map, $size) {
+
+        // without tag or class
+        @if length($tag-or-class) == 0 {
+            $map: map-get(var.$font-size-map, $size);
+            @include typography(nth($map, 1), nth($map, 2), nth($map, 3));
+            @content;
+
+            @if map-has-key(var.$font-size-map, "#{$size}-mobile") {
+                $list: map-get(var.$font-size-map, "#{$size}-mobile");
+
+                @include has-max-width(300) {
+                    @include typography(nth($list, 1), nth($list, 2), nth($list, 3));
+                    @content;
+                }
+            }
+        }
+
+        // with tag or/and class
+        @if length($tag-or-class) >= 1 {
+
+            #{$tag-or-class} {
+                $map: map-get(var.$font-size-map, $size);
+                @include typography(nth($map, 1), nth($map, 2), nth($map, 3));
+                @content;
+
+                @if map-has-key(var.$font-size-map, "#{$size}-mobile") {
+                    $list: map-get(var.$font-size-map, "#{$size}-mobile");
+
+                    @include has-max-width(300) {
+                        @include typography(nth($list, 1), nth($list, 2), nth($list, 3));
+                        @content;
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    @else {
+        @warn "#{$size} is not declared in the map $font-size-map (_variables.scss)";
+    }
+}
+
+@mixin typography($font-size, $line-height, $letter-spacing) {
+    font-size: func.remconverter($font-size);
+    line-height: $line-height;
+    letter-spacing: $letter-spacing;
+}
+
+/**
+FONT WEIGHT - BOLD
+ */
+@mixin is-bold {
+    font-weight: var.$bold;
+}
+
+/**
+TRANSITION
+ */
+@mixin transition($duration, $timing-function, $prop...) {
+    transition-timing-function: $timing-function;
+    transition-duration: $duration;
+    $prop: if(length($prop) == 0, all, $prop);
+    transition-property: $prop;
+}
+
+/**
+CENTER
+ */
+@mixin center($position) {
+    position: absolute;
+
+    @if $position=="vertical" {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    @if $position=="horizontal" {
+        left: 50%;
+        transform: translate(-50%);
+    }
+
+    @if $position=="both" {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/**
+CLEARFIX
+ */
+@mixin clearfix {
+    *zoom: 1;
+
+    &::before,
+    &::after {
+        display: table;
+        content: " ";
+    }
+
+    &::after {
+        clear: both;
+    }
+}
+
+/**
+PADDING & MARGIN
+ */
+@mixin padding_margin_builder($direction, $size, $attribute) {
+    @if $direction==all {
+        #{$attribute}: $size;
+    }
+
+    @if $direction==left {
+        #{$attribute}-left: $size;
+    }
+
+    @if $direction==right {
+        #{$attribute}-right: $size;
+    }
+
+    @if $direction==top {
+        #{$attribute}-top: $size;
+    }
+
+    @if $direction==bottom {
+        #{$attribute}-bottom: $size;
+    }
+
+    @if $direction==x {
+        #{$attribute}-left: $size;
+        #{$attribute}-right: $size;
+    }
+
+    @if $direction==y {
+        #{$attribute}-top: $size;
+        #{$attribute}-bottom: $size;
+    }
+
+}
+
+@mixin margin($direction: all, $size: null) {
+    @include padding_margin_builder($direction, func.remconverter($size), margin);
+}
+
+@mixin padding($direction: all, $size: null) {
+    @include padding_margin_builder($direction, func.remconverter($size), padding);
+}
+
+/**
+DISABLED
+ */
+@mixin disabled ($cursor-state, $opacity-value) {
+    cursor: $cursor-state;
+    opacity: $opacity-value;
+}
+
+/**
+DISABLED SHAKE
+ */
+@mixin disabled-shake {
+    @keyframes disabled_shake_animation {
+        10% {
+            transform: translateX(-10px);
+        }
+
+        40% {
+            transform: translateX(10px);
+        }
+
+        70% {
+            transform: translateX(-10px);
+        }
+
+        100% {
+            transform: translateX(10px);
+        }
+    }
+
+    animation-name: disabled_shake_animation;
+    animation-duration: .3s;
+    animation-timing-function: cubic-bezier(.42, 0, .58, 1);
+}
+
+/**
+HOVER FOR NON TOUCH DEViCES
+ */
+@mixin hover-supported {
+    @media not all and (pointer: coarse) {
+        &:hover {
+            @content;
+        }
+    }
+}
+
+/**
+OUTLINE FOR FOCUSSED ELEMENTS
+ */
+@mixin focus-outline {
+    outline: 3px solid func.color(general, focus);
+    outline-offset: 3px;
+}
+
+/**
+@import fonts
+ */
+@mixin import-font($domain, $font, $version: "1.4.4") {
+
+    @if ($domain == "immonet") {
+        @import url("https://smartdesign.immonet.de/font/#{$version}/css/#{$font}.css");
+    }
+
+    @if ($domain == "bauen") {
+        @import url("https://smartdesign.bauen.de/font/#{$version}/css/#{$font}.css");
+    }
+
+    @if ($domain == "immowelt") {
+        @import url("https://smartdesign.immowelt.org/font/#{$version}/css/#{$font}.css");
+    }
+
+}

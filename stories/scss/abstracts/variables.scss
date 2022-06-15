@@ -1,0 +1,250 @@
+/**
+WORKAROUND FOR DUPLICATED MODULE
+ */
+ @use "sass:math";
+
+ @function remconverter_for_vars($size) {
+     @if $size==0 {
+         @return 0;
+     }
+ 
+     @else {
+         @if type-of($size) == list {
+             $remArray: ();
+ 
+             @each $value in $size {
+                 @if $value==0 {
+                     $remArray: append($remArray, 0);
+                 }
+                 @else {
+                     $remSize: math.div($value, 16px);
+                     $remArray: append($remArray, $remSize * 1rem);
+                 }
+             }
+ 
+             @return $remArray;
+         }
+         @else {
+             $remSize: math.div($size, 16px);
+             @return $remSize * 1rem;
+         }
+     }
+ }
+ 
+ $spacing-50: remconverter_for_vars(4px);
+ $spacing-75: remconverter_for_vars(8px);
+ $spacing-100: remconverter_for_vars(16px);
+ $spacing-150: remconverter_for_vars(24px);
+ $spacing-200: remconverter_for_vars(32px);
+ $spacing-250: remconverter_for_vars(40px);
+ $spacing-300: remconverter_for_vars(56px);
+ $spacing-350: remconverter_for_vars(80px);
+ $spacing-400: remconverter_for_vars(120px);
+ $spacing-450: remconverter_for_vars(152px);
+ $spacing-500: remconverter_for_vars(200px);
+ 
+ $spacings-map: (
+     50: $spacing-50,
+     75: $spacing-75,
+     100: $spacing-100,
+     150: $spacing-150,
+     200: $spacing-200,
+     250: $spacing-250,
+     300: $spacing-300,
+     350: $spacing-350,
+     400: $spacing-400,
+     450: $spacing-450,
+     500: $spacing-500
+ );
+ 
+ /**
+ SIZES
+  */
+ $base-rem-size: 16px !default;
+ 
+ /**
+ BREAKPOINTS
+  */
+ $breakpoint-100: 360px !default; // < 360px small smartphone
+ $breakpoint-200: 426px !default; // < 426px big smartphone
+ $breakpoint-300: 768px !default; // < 768px extra Breakpoint
+ $breakpoint-400: 1024px !default; // < 1024 tablet >= desktop
+ 
+ /**
+ MEDIAQUERY breakpoints for min-width
+  */
+ 
+ $mediaquery-breakpoints-min: (
+     400: 1024px,
+     300: 768px,
+     200: 426px,
+     100: 360px,
+ ) !default;
+ 
+ /**
+ MEDIAQUERY breakpoints for max-width
+  */
+ 
+ $mediaquery-breakpoints-max: (
+     400: 1023px,
+     300: 767px,
+     200: 425px,
+     100: 359px,
+ ) !default;
+ 
+ /**
+ GRID
+  */
+ 
+ // number of columns
+ 
+ /* stylelint-disable-next-line */
+ $grid-columns: 12 !default;
+ 
+ //max width
+ $grid-max-width: 1072px !default;
+ 
+ // grid-breakpoints
+ $grid-breakpoints:
+     "500" 1024px 24px 32px,
+     "400" 1023px 16px 24px,
+     "300" 767px 16px 24px,
+     "200" 425px 16px 24px,
+     "100" 359px 16px 24px !default; // < 360px    -   small smarthphone
+ 
+ /**
+ TRANSITION
+  */
+ 
+ // Duration
+ $transition-100: 150ms !default;
+ $transition-200: 300ms !default;
+ $transition-300: 450ms !default;
+ 
+ // Time Functions
+ $timing-function-ease: ease !default;
+ $timing-function-outback: cubic-bezier(.74, -.49, .3, 1.41) !default;
+ 
+ /**
+ FONT WEIGHT - BOLD
+ Is used in the mixin 'is-bold'
+  */
+ 
+ $bold: 700;
+ $normal: 400;
+ 
+ /**
+ FONTS MAP
+ Attention the mobile information must be declared as a string.
+  */
+ 
+ $font-size-map: (
+     500: (
+         34px,
+         38px,
+         -.02em,
+     ),
+     "500-mobile": (
+         27px,
+         31px,
+         -.02em,
+     ),
+     400: (
+         28px,
+         32px,
+         -.015em,
+     ),
+     "400-mobile": (
+         24px,
+         28px,
+         -.015em,
+     ),
+     300: (
+         23px,
+         28px,
+         -.01em,
+     ),
+     "300-mobile": (
+         22px,
+         26px,
+         -.01em,
+     ),
+     200: (
+         19px,
+         24px,
+         -.01em,
+     ),
+     "200-mobile": (
+         18px,
+         22px,
+         -.01em,
+     ),
+     100: (
+         16px,
+         24px,
+         -.01em,
+     ),
+     75: (
+         14px,
+         24px,
+         -.005em,
+     ),
+     50: (
+         12px,
+         20px,
+         -.005em,
+     ),
+ );
+ 
+ /**
+ SHADOWS
+  */
+ $shadow-map: (
+     100: (
+         0 -2px 6px rgba(0, 0, 0, .04),
+         0 2.5px 2.5px rgba(0, 0, 0, .06),
+         0 8px 16px rgba(50, 50, 93, .07),
+     ),
+     200: (
+         0 -3px 8px rgba(0, 0, 0, .04),
+         0 5px 5px rgba(206, 132, 132, .05),
+         0 15px 30px rgba(50, 50, 93, .08)
+     ),
+     300: (
+         0 -3px 12px rgba(0, 0, 0, .04),
+         0 7.5px 9px rgba(0, 0, 0, .05),
+         0 24px 48px rgba(50, 50, 93, .09)
+     ),
+     400: (
+         0 -4px 16px rgba(0, 0, 0, .03),
+         0 10px 15px rgba(0, 0, 0, .07),
+         0 32px 72px rgba(50, 50, 93, .12)
+     )
+ );
+ 
+ /**
+ OPACITY
+  */
+ $opacity-25: .25;
+ $opacity-50: .5;
+ $opacity-75: .75;
+ 
+ /**
+ BORDER RADIUS
+  */
+ $border-radius-50: remconverter_for_vars(4px);
+ $border-radius-100: remconverter_for_vars(8px);
+ $border-radius-150: remconverter_for_vars(12px);
+ $border-radius-200: remconverter_for_vars(16px);
+ $border-radius-300: remconverter_for_vars(24px);
+ $border-radius-400: remconverter_for_vars(32px);
+ $border-radius-500: remconverter_for_vars(40px);
+ 
+ /**
+ DISABLED MAP
+  */
+ $is-disabled: (
+     not-allowed,
+     $opacity_25,
+ );
+ 

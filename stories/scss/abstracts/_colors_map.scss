@@ -1,0 +1,72 @@
+@import "colors_IW";
+/**
+COLOR MAP
+ */
+ $colors-map: (
+    grey: (
+        800: var(--color-grey-800),
+        700: var(--color-grey-700),
+        600: var(--color-grey-600),
+        500: var(--color-grey-500),
+        400: var(--color-grey-400),
+        300: var(--color-grey-300),
+        200: var(--color-grey-200),
+        100: var(--color-grey-100),
+    ),
+    white: var(--color-white),
+    // primary
+    primary: (
+        400: var(--color-primary-400),
+        300: var(--color-primary-300),
+        200: var(--color-primary-200),
+        100: var(--color-primary-100),
+    ),
+    // secondary
+    secondary: (
+        400: var(--color-secondary-400),
+        300: var(--color-secondary-300),
+        200: var(--color-secondary-200),
+        100: var(--color-secondary-100),
+    ),
+    yellow: (
+        400: var(--color-yellow-400),
+        300: var(--color-yellow-300),
+        200: var(--color-yellow-200),
+        100: var(--color-yellow-100),
+    ),
+    blue: (
+        400: var(--color-blue-400),
+        300: var(--color-blue-300),
+        200: var(--color-blue-200),
+        100: var(--color-blue-100),
+    ),
+    red: (
+        100: var(--color-red-100),
+        200: var(--color-red-200),
+        300: var(--color-red-300),
+        400: var(--color-red-400),
+    ),
+    green: (
+        100: var(--color-green-100),
+        200: var(--color-green-200),
+        300: var(--color-green-300),
+        400: var(--color-green-400),
+    ),
+    brand: (
+        facebook: var(--color-facebook),
+        fbmessenger: var(--color-fbmessenger),
+        twitter: var(--color-twitter),
+        whatsapp: var(--color-whatsapp),
+        linkedin: var(--color-linkedin)
+    ),
+    general: (
+        focus: var(--color-focus)
+    ),
+    translucent: (
+        100: var(--color-translucent-100),
+        150: var(--color-translucent-150),
+        200: var(--color-translucent-200),
+        250: var(--color-translucent-250),
+        300: var(--color-translucent-300)
+    ),
+);

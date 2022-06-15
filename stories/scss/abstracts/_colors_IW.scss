@@ -1,0 +1,86 @@
+/**
+ROOT COLORS IMMOWELT
+
+please notice: root and host should be in different rules
+for support of some ms edge versions.
+ */
+
+ @mixin colors-iw {
+    // LIGHT MODE COLORS
+    --color-primary-400: var(--color-yellow-400);
+    --color-primary-300: var(--color-yellow-300);
+    --color-primary-200: var(--color-yellow-200);
+    --color-primary-100: var(--color-yellow-100);
+    --color-secondary-400: var(--color-blue-400);
+    --color-secondary-300: var(--color-blue-300);
+    --color-secondary-200: var(--color-blue-200);
+    --color-secondary-100: var(--color-blue-100);
+    --color-grey-800: #1c1c21;
+    --color-grey-800-rgb: 28, 28, 33;
+    --color-grey-700: #303038;
+    --color-grey-700-rgb: 48, 48, 56;
+    --color-grey-600: #303038;  // replaced color #53535f with #303038 as the value of grey-600 is no longer wanted
+    --color-grey-500: #6e6e7c;
+    --color-grey-500-rgb: 110, 110, 124;
+    --color-grey-400: #94949e;
+    --color-grey-300: #cdcdd0;
+    --color-grey-200: #e2e2e4;
+    --color-grey-100: #f7f7f8;
+    --color-white: #fff;
+    --color-white-rgb: 255, 255, 255;
+
+    // SYSTEM RED
+    --color-red-400: #d10002;
+    --color-red-300: #ff4e50;
+    --color-red-200: #ff7072;
+    --color-red-100: #ffe0e0;
+
+    // SYSTEM GREEN
+    --color-green-400: #007a4b;
+    --color-green-300: #00c176;
+    --color-green-200: #00d683;
+    --color-green-100: #c5fce7;
+
+    // SYSTEM YELLOW
+    --color-yellow-400: #7a6200;
+    --color-yellow-300: #fc0;
+    --color-yellow-200: #ffd942;
+    --color-yellow-100: #fff6d1;
+
+    // SYSTEM BLUE
+    --color-blue-400: #007c8a;
+    --color-blue-300: #009daf;
+    --color-blue-200: #0ab3c7;
+    --color-blue-100: #e2fbfd;
+
+    // BRAND COLORS
+    --color-facebook: #3b5998;
+    --color-fbmessenger: #0084ff;
+    --color-twitter: #1da1f2;
+    --color-whatsapp: #25d366;
+    --color-linkedin: #0077b5;
+
+    // SPECIAL COLORS
+    --color-focus: #72c5ff;
+
+    // TRANSLUCENT
+    --color-translucent-100: rgba(var(--color-white-rgb), .85);
+    --color-translucent-150: rgba(var(--color-grey-500-rgb), .15);
+    --color-translucent-200: rgba(var(--color-grey-700-rgb), .5);
+    --color-translucent-250: rgba(var(--color-grey-700-rgb), .85);
+    --color-translucent-300: rgba(var(--color-grey-800-rgb), .85);
+
+    // DARK MODE
+
+    // @include is-dark-mode() {
+    //     --color-primary-400: #d10002;
+    // }
+}
+
+:root {
+    @include colors-iw;
+}
+
+:host {
+    @include colors-iw;
+}

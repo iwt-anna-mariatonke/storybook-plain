@@ -1,0 +1,104 @@
+@use "sass:math";
+
+@use "variables" as *;
+@use "colors_map" as colors;
+
+/**
+PIXEL TO REM CONVERTER
+☛ http://shared.gitlab-fue1.iwui.net/ui-playground/docs/#/abstract/functions
+ */
+@function remconverter($size) {
+    @if $size==0 {
+        @return 0;
+    } @else {
+        @if type-of($size) == list {
+            $remArray: ();
+
+            @each $value in $size {
+                @if $value==0 {
+                    $remArray: append($remArray, 0);
+                } @else {
+                    $remSize: math.div($value, $base-rem-size);
+                    $remArray: append($remArray, $remSize * 1rem);
+                }
+            }
+
+            @return $remArray;
+        } @else {
+            $remSize: math.div($size, $base-rem-size);
+            @return $remSize * 1rem;
+        }
+    }
+}
+
+/**
+GET TYPO PROPERTY FROM FONTS MAP
+ */
+@function typo-property($size, $prop) {
+
+    // check if prop exists
+    $check: if($prop=="font-size", true, false);
+    $check: if($prop=="line-height", true, $check);
+    $check: if($prop=="letter-spacing", true, $check);
+
+    @if $check==false {
+        @warn "#{$prop} is not declared in the map $font-size-map (_variables.scss)";
+        @return null;
+    }
+
+    // check if size exists
+    @if map-has-key($font-size-map, $size)==false {
+        @warn "#{$size} is not declared in the map $font-size-map (_variables.scss)";
+        @return inherit;
+    }
+
+    // get value
+    $value: map-get($font-size-map, $size);
+
+    @if $prop=="font-size" {
+        @return remconverter(nth($value, 1));
+    }
+
+    @if $prop=="line-height" {
+        @return remconverter(nth($value, 2));
+    }
+
+    @if $prop=="letter-spacing" {
+        @return nth($value, 3);
+    }
+
+}
+
+/**
+GET COLOR FROM MAP
+ */
+@function color($colorName, $colorVariant: null) {
+
+    @if map-has-key(colors.$colors-map, $colorName) {
+
+        @if ($colorVariant != null) {
+            @return map-get(map-get(colors.$colors-map, $colorName), $colorVariant);
+        }
+
+        @if type-of(map-get(colors.$colors-map, $colorName)) == "string" {
+            @return map-get(colors.$colors-map, $colorName);
+        }
+
+        @warn "#{$colorName} is a map. please choose a variant.";
+        @return currentColor;
+    }
+
+    @warn "#{$colorName} is not declared in the map colors.$colors-map (_colors.scss)";
+    @return currentColor;
+}
+
+/**
+GET SHADOW FROM MAP
+ */
+@function shadow($key) {
+    @if map-has-key($shadow-map, $key) == false {
+        @warn "#{$key} is not declared in the map $shadow-map (_variables.scss)";
+        @return null;
+    }
+    @return map-get($shadow-map, $key);
+}
