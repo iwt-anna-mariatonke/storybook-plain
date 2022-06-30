@@ -1,0 +1,71 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import '../../scss/link.scss';
+import html from '../examples/link-inline.html';
+
+export const Template = (args) => 
+  // You can either use a function to create DOM elements or use a plain html string!
+    `
+    <a class="link link--primary">${args.label}</a></br>
+    <a class="link link--primary link--inline">${args.inline}</a></br>
+   `
+  //return createButton({ label, ...args });
+
+
+export const HTML = () => html;
+
+<Meta 
+title="Components/Action/Link" 
+parameters={{
+  viewMode: 'docs',
+}}
+argTypes={{
+      label: { 
+        name: 'Link Primary',
+        control: { type: 'text' } 
+      },
+      inline: { 
+        name:'Link Inline',
+        control: { type: 'text' } 
+      }
+    }}
+    />
+
+## hello links
+
+Here are the links.
+
+<Canvas>
+  <Story 
+    name="Overview"
+    args={{
+      label: 'Link Primary',
+      inline: 'Primary Link Inline'
+    }}
+    parameters={{ viewMode: 'story',}}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+This is how to use the inline link:
+
+<Canvas>
+  <Story 
+      name="inline"
+      args={{
+        label: 'Link Primary',
+        inline: 'Primary Link Inline'
+      }}
+      parameters={{
+          controls: { disable: true },
+          docs: { source: { code: html } },
+          storySource: { source: html },
+      }}
+      argTypes={{
+      label: { control: { type: null } },
+      inline: { control: { type: null } },
+    }}
+    >
+     {HTML.bind({})}
+  </Story>
+</Canvas>

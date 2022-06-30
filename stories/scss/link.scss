@@ -1,0 +1,38 @@
+@use "abstracts/mixins" as *;
+@use "abstracts/variables" as vars;
+@use "abstracts/functions" as func;
+@use "abstracts/IW_font";
+
+@mixin link{
+    display: inline-block;
+    @include typo-has-size(100);
+    color: func.color(secondary, 400);
+
+}
+
+p a,
+.has-font-100 a{
+    text-decoration: underline;
+    @include link;
+    @include hover-supported() {
+        color: func.color(secondary, 300);
+    }
+}
+
+.link {
+    @include link;
+    @include hover-supported() {
+        color: func.color(secondary, 300);
+
+    }
+
+    &.link--inline {
+        text-decoration: underline;
+    }
+
+    // prevent SAFARI BROWSER from breaking line between content and arrow when content has phone number with hyphen
+    &[href^="tel"] {
+        white-space: nowrap;
+    }
+
+}
